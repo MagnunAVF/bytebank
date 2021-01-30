@@ -24,24 +24,26 @@ class TransferForm extends StatelessWidget {
       appBar: AppBar(
         title: Text('New Transfer'),
       ),
-      body: Column(
-        children: [
-          Editor(
-            controller: _fieldControllerAccountNumber,
-            label: 'Account Number',
-            hint: '0000',
-          ),
-          Editor(
-            controller: _fieldControllerValue,
-            label: 'Value',
-            hint: '0.00',
-            icon: Icons.monetization_on,
-          ),
-          RaisedButton(
-            onPressed: () => _createTransfer(context),
-            child: Text('Confirm'),
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Editor(
+              controller: _fieldControllerAccountNumber,
+              label: 'Account Number',
+              hint: '0000',
+            ),
+            Editor(
+              controller: _fieldControllerValue,
+              label: 'Value',
+              hint: '0.00',
+              icon: Icons.monetization_on,
+            ),
+            RaisedButton(
+              onPressed: () => _createTransfer(context),
+              child: Text('Confirm'),
+            )
+          ],
+        ),
       ),
     );
   }
