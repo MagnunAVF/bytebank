@@ -2,6 +2,16 @@ import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/models/transfer.dart';
 import 'package:flutter/material.dart';
 
+const _appBarTitle = 'New Transfer';
+
+const _accountNumberFieldLabel = 'Account Number';
+const _accountNumberFieldHint = '0000';
+
+const _valueFieldLabel = 'Value';
+const _valueFieldHint = '0.00';
+
+const _confirmButtonText = 'Confirm';
+
 class TransferForm extends StatelessWidget {
   final TextEditingController _fieldControllerAccountNumber =
       TextEditingController();
@@ -11,26 +21,26 @@ class TransferForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Transfer'),
+        title: Text(_appBarTitle),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Editor(
               controller: _fieldControllerAccountNumber,
-              label: 'Account Number',
-              hint: '0000',
+              label: _accountNumberFieldLabel,
+              hint: _accountNumberFieldHint,
             ),
             Editor(
               controller: _fieldControllerValue,
-              label: 'Value',
-              hint: '0.00',
+              label: _valueFieldLabel,
+              hint: _valueFieldHint,
               icon: Icons.monetization_on,
             ),
             RaisedButton(
               onPressed: () => _createTransfer(context),
-              child: Text('Confirm'),
-            )
+              child: Text(_confirmButtonText),
+            ),
           ],
         ),
       ),

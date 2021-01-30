@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'form.dart';
 
+const _appBarTitle = 'Transfers';
+
 class TransfersList extends StatefulWidget {
   final List<Transfer> _transfers = List();
 
@@ -17,7 +19,7 @@ class TransfersListState extends State<TransfersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transfers'),
+        title: Text(_appBarTitle),
       ),
       body: ListView.builder(
         itemCount: widget._transfers.length,
