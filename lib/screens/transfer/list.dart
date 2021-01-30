@@ -30,21 +30,21 @@ class TransfersListState extends State<TransfersList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final Future<Transfer> future =
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
             return TransferForm();
-          }));
-          future.then((receivedTransfer) {
-            if (receivedTransfer != null) {
-              setState(() {
-                widget._transfers.add(receivedTransfer);
-              });
-            }
-          });
+          })).then((receivedTransfer) => _updateTransfers(receivedTransfer));
         },
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  void _updateTransfers(Transfer receivedTransfer) {
+    if (receivedTransfer != null) {
+      setState(() {
+        widget._transfers.add(receivedTransfer);
+      });
+    }
   }
 }
 
