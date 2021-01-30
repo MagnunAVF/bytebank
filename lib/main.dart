@@ -47,8 +47,7 @@ class TransferForm extends StatelessWidget {
   }
 
   void _createTransfer(BuildContext context) {
-    final int accountNumber =
-        int.tryParse(_fieldControllerAccountNumber.text);
+    final int accountNumber = int.tryParse(_fieldControllerAccountNumber.text);
     final double value = double.tryParse(_fieldControllerValue.text);
 
     if (accountNumber != null && value != null) {
@@ -84,28 +83,41 @@ class Editor extends StatelessWidget {
   }
 }
 
-class TransfersList extends StatelessWidget {
+class TransfersList extends StatefulWidget {
+  final List<Transfer> _transfers = List();
+
+  @override
+  State<StatefulWidget> createState() {
+    return TransfersListState();
+  }
+}
+
+class TransfersListState extends State<TransfersList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Transfers'),
       ),
-      body: Column(
-        children: [
-          TransferItem(Transfer(100.0, 1000)),
-          TransferItem(Transfer(200.0, 1001)),
-          TransferItem(Transfer(300.0, 2000)),
-        ],
+      body: ListView.builder(
+        itemCount: widget._transfers.length,
+        itemBuilder: (context, index) {
+          final transfer = widget._transfers[index];
+          return TransferItem(transfer);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final Future<Transfer> future = Navigator.push(context, MaterialPageRoute(builder: (context) {
+          final Future<Transfer> future =
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
             return TransferForm();
           }));
           future.then((receivedTransfer) {
-            debugPrint('Transfer received!');
-            debugPrint('$receivedTransfer');
+            if (receivedTransfer != null) {
+              setState(() {
+                widget._transfers.add(receivedTransfer);
+              });
+            }
           });
         },
         child: Icon(Icons.add),
