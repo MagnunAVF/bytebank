@@ -26,37 +26,24 @@ class TransferForm extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _fieldControllerAccountNumber,
-              style: TextStyle(fontSize: 24.0),
-              decoration: InputDecoration(
-                labelText: 'Account Number',
-                hintText: '0000',
-              ),
-              keyboardType: TextInputType.number,
-            ),
+          Editor(
+            controller: _fieldControllerAccountNumber,
+            label: 'Account Number',
+            hint: '0000',
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _fieldControllerValue,
-              style: TextStyle(fontSize: 24.0),
-              decoration: InputDecoration(
-                icon: Icon(Icons.monetization_on),
-                labelText: 'Value',
-                hintText: '0.00',
-              ),
-              keyboardType: TextInputType.number,
-            ),
+          Editor(
+            controller: _fieldControllerValue,
+            label: 'Value',
+            hint: '0.00',
+            icon: Icons.monetization_on,
           ),
           RaisedButton(
             onPressed: () {
-              final int accountNumber = int.tryParse(_fieldControllerAccountNumber.text);
+              final int accountNumber =
+                  int.tryParse(_fieldControllerAccountNumber.text);
               final double value = double.tryParse(_fieldControllerValue.text);
 
-              if(accountNumber != null && value != null) {
+              if (accountNumber != null && value != null) {
                 final newTransfer = Transfer(value, accountNumber);
                 debugPrint('$newTransfer');
               }
@@ -64,6 +51,32 @@ class TransferForm extends StatelessWidget {
             child: Text('Confirm'),
           )
         ],
+      ),
+    );
+  }
+}
+
+class Editor extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+  final String hint;
+  final IconData icon;
+
+  Editor({this.controller, this.label, this.hint, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextField(
+        controller: controller,
+        style: TextStyle(fontSize: 24.0),
+        decoration: InputDecoration(
+          icon: icon != null ? Icon(icon) : null,
+          labelText: label,
+          hintText: hint,
+        ),
+        keyboardType: TextInputType.number,
       ),
     );
   }
