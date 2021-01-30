@@ -7,7 +7,7 @@ class BytebankApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: TransferForm(),
+        body: TransfersList(),
       ),
     );
   }
@@ -38,7 +38,7 @@ class TransferForm extends StatelessWidget {
             icon: Icons.monetization_on,
           ),
           RaisedButton(
-            onPressed: () => _createTransfer(),
+            onPressed: () => _createTransfer(context),
             child: Text('Confirm'),
           )
         ],
@@ -46,14 +46,14 @@ class TransferForm extends StatelessWidget {
     );
   }
 
-  void _createTransfer() {
+  void _createTransfer(BuildContext context) {
     final int accountNumber =
         int.tryParse(_fieldControllerAccountNumber.text);
     final double value = double.tryParse(_fieldControllerValue.text);
 
     if (accountNumber != null && value != null) {
       final newTransfer = Transfer(value, accountNumber);
-      debugPrint(newTransfer.toString());
+      Navigator.pop(context, newTransfer);
     }
   }
 }
@@ -99,6 +99,15 @@ class TransfersList extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final Future<Transfer> future = Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return TransferForm();
+          }));
+          future.then((receivedTransfer) {
+            debugPrint('Transfer received!');
+            debugPrint('$receivedTransfer');
+          });
+        },
         child: Icon(Icons.add),
       ),
     );
