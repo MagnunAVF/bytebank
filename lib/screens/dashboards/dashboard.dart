@@ -1,4 +1,5 @@
 import 'package:bytebank/models/balance.dart';
+import 'package:bytebank/screens/deposit/form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'balance.dart';
@@ -16,14 +17,12 @@ class Dashboard extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: BalanceCard(),
           ),
-          Consumer<Balance>(
-            builder: (context, balance, child) {
-              return RaisedButton(
-                child: Text('Add'),
-                onPressed: () {
-                  balance.add(10);
-                },
-              );
+          RaisedButton(
+            child: Text('Receive Deposit'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return DepositForm();
+              }));
             },
           ),
         ],
