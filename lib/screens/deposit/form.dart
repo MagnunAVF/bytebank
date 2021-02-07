@@ -39,13 +39,19 @@ class DepositForm extends StatelessWidget {
 
   _createDeposit(context) {
     final double value = double.tryParse(_fieldControllerValue.text);
-    final validDeposit = value != null;
+    final validDeposit = _validateDeposit(value);
 
     if (validDeposit) {
       _updateState(context, value);
 
       Navigator.pop(context);
     }
+  }
+
+  _validateDeposit(double value) {
+    final _validValue = value != null;
+
+    return _validValue;
   }
 
   _updateState(context, value) {

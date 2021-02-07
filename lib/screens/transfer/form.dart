@@ -1,6 +1,9 @@
 import 'package:bytebank/components/editor.dart';
+import 'package:bytebank/models/balance.dart';
 import 'package:bytebank/models/transfer.dart';
+import 'package:bytebank/models/transfers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 const _appBarTitle = 'New Transfer';
 
@@ -50,16 +53,25 @@ class TransferForm extends StatelessWidget {
   void _createTransfer(BuildContext context) {
     final int accountNumber = int.tryParse(_fieldControllerAccountNumber.text);
     final double value = double.tryParse(_fieldControllerValue.text);
+    final validTransfer = _validateTransfer(accountNumber, value);
 
-    if (accountNumber != null && value != null) {
-      final newTransfer = Transfer(
-        value,
-        accountNumber,
-      );
-      Navigator.pop(
-        context,
-        newTransfer,
-      );
+    if (validTransfer) {
+      final newTransfer = Transfer(value, accountNumber);
+
+      _updateState(context, newTransfer, value);
+
+      Navigator.pop(context);
     }
+  }
+
+  _validateTransfer(accountNumber, value) {
+    final _filledFields = accountNumber != null && value != null;
+
+    return _filledFields;
+  }
+
+  _updateState(context, newTransfer, value) {
+    Provider.of<Transfers>(context, listen: false).add(newTransfer);
+    Provider.of<Balance>(context, listen: false).subtract(value);
   }
 }

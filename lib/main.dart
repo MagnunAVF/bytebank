@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/balance.dart';
+import 'models/transfers.dart';
 import 'screens/dashboards/dashboard.dart';
 
 void main() => runApp(
-      ChangeNotifierProvider(
-        create: (context) => Balance(0),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => Balance(0.0),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Transfers(),
+          ),
+        ],
         child: BytebankApp(),
       ),
     );
