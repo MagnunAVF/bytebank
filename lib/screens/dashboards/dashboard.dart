@@ -1,5 +1,6 @@
 import 'package:bytebank/screens/deposit/form.dart';
 import 'package:bytebank/screens/transfer/form.dart';
+import 'package:bytebank/screens/transfer/latest.dart';
 import 'package:flutter/material.dart';
 import 'balance.dart';
 
@@ -41,6 +42,7 @@ class Dashboard extends StatelessWidget {
               ),
             ],
           ),
+          LatestTransfers(),
         ],
       ),
     );
